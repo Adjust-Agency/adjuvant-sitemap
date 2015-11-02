@@ -73,12 +73,16 @@ class Generator extends Sitemap {
 	{
 		
 		$tree = $this->getTracker();
-		$hash = md5( json_encode($tree) );
-		$filename = 'sitemap-' . $language. '-' . $hash . ".xml";
+		$hash = md5( json_encode($tree) . $this->host );
+		$filename = '.sitemap-' . $language. '-' . $hash . ".xml";
 		$trackpath  = preg_replace("`\/{2,}`", '/', $this->trackPath . '/');		
 		$xml = $trackpath . $filename;
 				
 		if( ! is_file( $xml )) {
+			
+			foreach (glob(".sitemap-" . $language. "-*") as $oldxmlfile) {
+				unlink($trackpath . $oldxmlfile);
+			}
 			
 			$this->setPath( $trackpath);
 			$this->setFilename( basename($filename, '.xml') );

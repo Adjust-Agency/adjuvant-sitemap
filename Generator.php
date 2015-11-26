@@ -32,7 +32,7 @@ class Generator extends Sitemap {
 			file_put_contents($trackFile, json_encode(array()));	
 		}
 		
-		return json_decode( file_get_contents( $trackFile )); 
+		return (object) json_decode( file_get_contents( $trackFile )); 
 	}
 	
 	public function setTrackerPath($path)
